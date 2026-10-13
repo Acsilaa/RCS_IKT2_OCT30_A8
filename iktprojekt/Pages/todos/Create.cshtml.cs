@@ -20,20 +20,12 @@ public class CreateModel : PageModel
     [BindProperty]
     public CreatePTaskDTO PTask { get; set; } = default!;
 
-    public SelectList Projects { get; set; } = default!;
-    public SelectList States { get; set; } = default!;
+    public List<Project> Projects { get; set; } = default!;
     public SelectList Members { get; set; } = default!;
 
     public async Task OnGetAsync()
     {
-        Projects = new SelectList(
-            await _context.Projects.ToListAsync(),
-            "Id",
-            "Name"
-        );
-        States = new SelectList(
-            Enum.GetValues<PTask.TodoState>()
-        );
+        Projects = await _context.Projects.ToListAsync();
         Members = new SelectList(
             await _context.Members.ToListAsync(),
             "Id",
@@ -44,21 +36,19 @@ public class CreateModel : PageModel
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD.
     public async Task<IActionResult> OnPostAsync()
     {
+        Projects = await _context.Projects.ToListAsync();
         if (!ModelState.IsValid)
         {
-            Projects = new SelectList(
-            await _context.Projects.ToListAsync(),
-                "Id",
-                "Name"
-            );
-            States = new SelectList(
-                Enum.GetValues<PTask.TodoState>()
-            );
             Members = new SelectList(
             await _context.Members.ToListAsync(),
                 "Id",
                 "Name"
             );
+            return Page();
+        }
+        if(PTask.Deadline > Projects.Find(p => p.Id == PTask.ProjectId).Deadline)
+        {
+            ModelState.AddModelError("ProjectId", "A határidő nem lehet később, mint a projekt határideje.");
             return Page();
         }
 

@@ -8,11 +8,11 @@ namespace iktprojekt.Models
         public enum TodoState
         {
             [Display(Name ="Teendő")]
-            Todo,
+            Todo = 1,
             [Display(Name = "Folyamatban")]
-            InProgress,
+            InProgress = 2,
             [Display(Name = "Kész")]
-            Completed,
+            Completed = 3,
         }
         public enum TodoPriority
         {
@@ -39,12 +39,16 @@ namespace iktprojekt.Models
         public DateTime? Deadline { get; set; }
 
         // FK
+        [DisplayName("Tag")]
         public int? MemberId { get; set; }
+        [DisplayName("Projekt")]
         public required int ProjectId { get; set; }
 
         //Nav prop
+        [DisplayName("Tag")]
         public Member? Member { get; set; } = null!;
 
+        [DisplayName("Projekt")]
         public Project Project { get; set; } = null!;
     }
 }

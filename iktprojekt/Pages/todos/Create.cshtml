@@ -23,7 +23,7 @@
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="PTask.State" class="control-label"></label>
-                <select asp-items="Model.States" asp-for="PTask.State"></select>
+                <select asp-items="Html.GetEnumSelectList<PTask.TodoState>()" asp-for="PTask.State"></select>
                 <span asp-validation-for="PTask.State" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,8 +34,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="PTask.Deadline" class="control-label"></label>
-                <input asp-for="PTask.Deadline" class="form-control" />
-                <span asp-validation-for="PTask.Deadline" class="text-danger"></span>
+                <input asp-for="PTask.Deadline" class="form-control" type="datetime-local" id="deadlineSelect" />
+                <span asp-validation-for="PTask.Deadline" class="text-danger" id="deadlineHelp"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PTask.MemberId" class="control-label"></label>
@@ -47,8 +47,12 @@
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="PTask.ProjectId" class="control-label"></label>
-                <select asp-for="PTask.ProjectId" asp-items="Model.Projects" class="form-control">
+                <select asp-for="PTask.ProjectId" class="form-control" id="projectSelect">
                      <option value="">-- Válasszon projektet --</option>
+                    @foreach (var project in Model.Projects)
+                    {
+                        <option value="@project.Id" data-deadline="@(project.Deadline?.ToString("yyyy-MM-ddTHH:mm") ?? "")">@project.Name</option>
+                    }
                 </select>
                 <span asp-validation-for="PTask.ProjectId" class="text-danger"></span>
             </div>
@@ -64,5 +68,10 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @{
+        <script src="~/js/create-task.js"></script>
+    }
 }

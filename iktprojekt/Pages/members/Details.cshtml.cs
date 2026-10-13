@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using iktprojekt.Models;
 using iktprojekt.Data;
+using System.Diagnostics;
 
 namespace iktprojekt.Pages.MemberPages;
 
@@ -15,6 +16,7 @@ public class DetailsModel : PageModel
     }
 
     public Member Member { get; set; } = default!;
+    public List<string> Tasks { get; set; } = new List<string>();
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
@@ -23,7 +25,7 @@ public class DetailsModel : PageModel
             return NotFound();
         }
 
-        var member = await _context.Members.FirstOrDefaultAsync(m => m.Id == id);
+        var member = await _context.Members.Include(m => m.Tasks).FirstOrDefaultAsync(m => m.Id == id);
         if (member is null)
         {
             return NotFound();
@@ -31,6 +33,7 @@ public class DetailsModel : PageModel
         else
         {
             Member = member;
+            Tasks = member.Tasks.Select(t => t.Title).ToList();
         }
 
         return Page();

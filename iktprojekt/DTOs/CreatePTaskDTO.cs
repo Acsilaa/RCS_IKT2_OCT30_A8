@@ -20,7 +20,9 @@ namespace iktprojekt.DTOs
         public DateTime? Deadline { get; set; }
 
         // FK
+        [DisplayName("Tag")]
         public int? MemberId { get; set; }
+        [DisplayName("Projekt")]
         public required int ProjectId { get; set; }
     }
 }

@@ -11,9 +11,10 @@ namespace iktprojekt.Models
         public required string Name { get; set; }
         [DisplayName("E-Mail cím")]
         public string? Email { get; set; }
-        
+
 
         // Nav prop
+        [DisplayName("Teendők")]
         public List<PTask> Tasks { get; set; } = new();
 
         public override string ToString()
