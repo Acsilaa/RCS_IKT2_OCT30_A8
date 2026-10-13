@@ -2,10 +2,10 @@
 @model iktprojekt.Pages.MemberPages.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Részletek";
 }
 
-<h1>Details</h1>
+<h1>Részletek</h1>
 
 <div>
     <h4>Member</h4>
@@ -32,6 +32,6 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Member.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Member.Id">Szerkesztés</a> |
+    <a asp-page="./Index">Vissza a listához</a>
 </div>
