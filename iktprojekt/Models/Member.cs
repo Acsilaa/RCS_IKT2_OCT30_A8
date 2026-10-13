@@ -15,5 +15,10 @@ namespace iktprojekt.Models
 
         // Nav prop
         public List<PTask> Tasks { get; set; } = new();
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

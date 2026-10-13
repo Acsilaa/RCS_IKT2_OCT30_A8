@@ -19,6 +19,6 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        PTask = await _context.Tasks.ToListAsync();
+        PTask = await _context.Tasks.Include(t => t.Member).Include(t => t.Project).ToListAsync();
     }
 }

@@ -7,15 +7,23 @@ namespace iktprojekt.Models
     {
         public enum TodoState
         {
+            [Display(Name ="Teendő")]
             Todo,
+            [Display(Name = "Folyamatban")]
             InProgress,
+            [Display(Name = "Kész")]
             Completed,
         }
         public enum TodoPriority
         {
+            [Display(Name = "Alacsony")]
             Low = 1,
+
+            [Display(Name = "Közepes")]
             Medium = 2,
-            High = 3,
+
+            [Display(Name = "Magas")]
+            High = 3
         }
 
         public int Id { get; set; }
@@ -32,11 +40,11 @@ namespace iktprojekt.Models
 
         // FK
         public int? MemberId { get; set; }
-        [Required]
         public required int ProjectId { get; set; }
 
         //Nav prop
         public Member? Member { get; set; } = null!;
+
         public Project Project { get; set; } = null!;
     }
 }

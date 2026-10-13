@@ -1,4 +1,5 @@
 @page
+@using iktprojekt.Models
 @model iktprojekt.Pages.PTaskPages.CreateModel
 
 @{
@@ -22,12 +23,13 @@
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="PTask.State" class="control-label"></label>
-                <input asp-for="PTask.State" class="form-control" aria-required="true"/>
+                <select asp-items="Model.States" asp-for="PTask.State"></select>
                 <span asp-validation-for="PTask.State" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PTask.Priority" class="control-label"></label>
-                <input asp-for="PTask.Priority" class="form-control" />
+                <select asp-for="PTask.Priority" asp-items="Html.GetEnumSelectList<PTask.TodoPriority>()">
+                </select>
                 <span asp-validation-for="PTask.Priority" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,24 +39,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="PTask.MemberId" class="control-label"></label>
-                <input asp-for="PTask.MemberId" class="form-control" />
+                <select asp-for="PTask.MemberId" asp-items="Model.Members" class="form-control">
+                    <option value="">-- Válasszon Tagot --</option>
+                </select>
                 <span asp-validation-for="PTask.MemberId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="PTask.ProjectId" class="control-label"></label>
-                <input asp-for="PTask.ProjectId" class="form-control" aria-required="true"/>
+                <select asp-for="PTask.ProjectId" asp-items="Model.Projects" class="form-control">
+                     <option value="">-- Válasszon projektet --</option>
+                </select>
                 <span asp-validation-for="PTask.ProjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PTask.Member" class="control-label"></label>
-                <input asp-for="PTask.Member" class="form-control" />
-                <span asp-validation-for="PTask.Member" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PTask.Project" class="control-label"></label>
-                <input asp-for="PTask.Project" class="form-control" />
-                <span asp-validation-for="PTask.Project" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Létrehozás" class="btn btn-primary" />

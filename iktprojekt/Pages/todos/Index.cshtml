@@ -26,12 +26,6 @@
                 @Html.DisplayNameFor(model => model.PTask[0].Deadline)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PTask[0].MemberId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PTask[0].ProjectId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PTask[0].Member)
             </th>
             <th>
@@ -56,16 +50,10 @@
                 @Html.DisplayFor(model => item.Deadline)
             </td>
             <td>
-                @Html.DisplayFor(model => item.MemberId)
+                 @Html.DisplayFor(model => item.Member.Name)
             </td>
             <td>
-                @Html.DisplayFor(model => item.ProjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Member)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Project)
+                @Html.DisplayFor(model => item.Project.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Szerkesztés</a> |
