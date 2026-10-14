@@ -29,3 +29,54 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.text-center{
+    text-align: center;
+}
+.mb-10{
+    margin-bottom: 40px;
+}
+.flex{
+    display: flex;
+}
+.flex-col{
+    flex-direction: column;
+}
+.text-sm{
+    font-size: 14px;
+    font-style: normal;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.gap-2{
+    gap:8px;
+}
+
+.todo{
+    border-radius: 4px;
+    border: 1px solid #aaa;
+    padding: 10px 20px;
+    background: #eee;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 500px;
+}
+
+.todo-col{
+    width: calc(100%/3);
+    padding: 0 5px;
+}
+
+.inprogress {
+    background-color: #e0d09d;
+}
+.completed {
+    background: #86d190;
+}
+.bold{
+    font-weight: bold;
+}
+.text-md {
+    font-size: 18px;
+}

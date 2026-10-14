@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using iktprojekt.Models;
 using iktprojekt.Data;
+using iktprojekt.DTOs;
 
 namespace iktprojekt.Pages.MemberPages;
 
@@ -21,7 +22,7 @@ public class CreateModel : PageModel
     }
 
     [BindProperty]
-    public Member Member { get; set; } = default!;
+    public CreateMemberDTO Member { get; set; } = default!;
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD.
     public async Task<IActionResult> OnPostAsync()
@@ -31,7 +32,7 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        _context.Members.Add(Member);
+        _context.Members.Add(new Member { Name = Member.Name, Email = Member.Email });
         await _context.SaveChangesAsync();
 
         return RedirectToPage("./Index");

@@ -15,15 +15,14 @@ public class DetailsModel : PageModel
     }
 
     public Project Project { get; set; } = default!;
+    public List<PTask> CompletedTasks { get; set; } = new();
+    public List<PTask> InProgressTasks { get; set; } = new();
+    public List<PTask> TodoTasks { get; set; } = new();
 
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public async Task<IActionResult> OnGetAsync(int projectid)
     {
-        if (id is null)
-        {
-            return NotFound();
-        }
 
-        var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
+        var project = await _context.Projects.Include(p => p.Tasks).FirstOrDefaultAsync(m => m.Id == projectid);
         if (project is null)
         {
             return NotFound();
@@ -31,6 +30,11 @@ public class DetailsModel : PageModel
         else
         {
             Project = project;
+            var todos = project.Tasks;
+            todos.ForEach(t => t.Member = _context.Members.FirstOrDefault(m => m.Id == t.MemberId));
+            CompletedTasks = todos.FindAll(t => t.State == PTask.TodoState.Completed);
+            InProgressTasks = todos.FindAll(t => t.State == PTask.TodoState.InProgress);
+            TodoTasks = todos.FindAll(t => t.State == PTask.TodoState.Todo);
         }
 
         return Page();

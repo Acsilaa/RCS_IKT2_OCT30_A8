@@ -38,8 +38,7 @@
                 @Html.DisplayFor(model => item.Deadline)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Szerkesztés</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Részletek</a> |
+                <a href="/project/@item.Id/details">Részletek</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Törlés</a>
             </td>
         </tr>

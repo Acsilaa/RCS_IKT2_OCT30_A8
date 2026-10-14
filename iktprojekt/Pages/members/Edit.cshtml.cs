@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using iktprojekt.Models;
 using iktprojekt.Data;
+using iktprojekt.DTOs;
 
 namespace iktprojekt.Pages.MemberPages;
 
@@ -31,6 +32,7 @@ public class EditModel : PageModel
             return NotFound();
         }
         Member = member;
+
         return Page();
     }
 

@@ -61,7 +61,7 @@ public class EditModel : PageModel
             }
         }
 
-        return RedirectToPage("./Index");
+        return Redirect($"/project/{Project.Id}/details");
     }
 
     private bool ProjectExists(int id)

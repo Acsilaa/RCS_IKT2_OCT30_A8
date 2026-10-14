@@ -1,37 +1,57 @@
-@page
+@page "/project/{projectid:int}/details"
 @model iktprojekt.Pages.ProjectPages.DetailsModel
 
 @{
     ViewData["Title"] = "Részletek";
 }
 
-<h1>Részletek</h1>
+<h1 class="text-center mb-10">@Model.Project.Name</h1>
 
-<div>
-    <h4>Projekt</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project.Deadline)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.Deadline)
-        </dd>
-    </dl>
+<div class="flex justify-between">
+    <h2 class="mb-10">Teendők</h2>
+    <div class="flex gap-2">
+        <a href="/project/@Model.Project.Id/createtodo">+ Teendő</a>
+        <a asp-page="./Edit" asp-route-id="@Model.Project.Id">Projekt szerkesztése</a>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Project.Id">Szerkesztés</a> |
-    <a asp-page="./Index">Vissza</a>
+
+<div class="flex">
+    <div class="flex flex-col todo-col">
+            @foreach(var todo in Model.TodoTasks)
+            {
+                <div class="todo flex flex-col">
+                    <p class="text-md bold">@todo.Title</p>
+                    <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
+                    <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
+                        <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <a class="text-sm" href="/edit/@todo.Id">Szerkesztés</a>
+                </div>
+            }
+        </div>
+
+    <div class="flex flex-col todo-col">
+        @foreach(var todo in Model.InProgressTasks)
+            {
+                <div class="todo inprogress flex flex-col">
+                    <p class="text-md bold">@todo.Title</p>
+                    <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
+                    <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
+                        <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <a class="text-sm" href="/edit/@todo.Id">Szerkesztés</a>
+                </div>
+            }
+    </div>
+
+    <div class="flex flex-col todo-col">
+        @foreach(var todo in Model.CompletedTasks)
+            {
+                <div class="todo completed flex flex-col">
+                    <p class="text-md bold">@todo.Title</p>
+                    <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
+                    <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
+                    <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <a class="text-sm" href="/edit/@todo.Id">Szerkesztés</a>
+                </div>
+            }
+    </div>
 </div>
