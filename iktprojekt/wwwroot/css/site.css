@@ -87,3 +87,13 @@ body {
 .prio-medium {
     border: 2px solid orange;
 }
+.todo > p:nth-child(1){
+    justify-content: space-between;
+}
+.todo button{
+    border: 1px solid grey;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
