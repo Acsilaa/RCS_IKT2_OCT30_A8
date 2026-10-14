@@ -1,5 +1,6 @@
 @page "/project/{projectid:int}/details"
 @model iktprojekt.Pages.ProjectPages.DetailsModel
+@using iktprojekt.Models;
 
 @{
     ViewData["Title"] = "Részletek";
@@ -19,11 +20,12 @@
     <div class="flex flex-col todo-col">
             @foreach(var todo in Model.TodoTasks)
             {
-                <div class="todo flex flex-col">
+                <div class="todo flex flex-col @(@todo.Priority == PTask.TodoPriority.High ? "prio-high" : (@todo.Priority == PTask.TodoPriority.Medium ? "prio-medium" : "") )">
                     <p class="text-md bold">@todo.Title</p>
                     <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
                     <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
-                        <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <p class="text-sm">Fontosság: @Html.DisplayFor(model => @todo.Priority)</p>
                     <a class="text-sm" href="/edit/@todo.Id">Szerkesztés</a>
                 </div>
             }
@@ -32,11 +34,12 @@
     <div class="flex flex-col todo-col">
         @foreach(var todo in Model.InProgressTasks)
             {
-                <div class="todo inprogress flex flex-col">
+                <div class="todo inprogress flex flex-col @(@todo.Priority == PTask.TodoPriority.High ? "prio-high" : (@todo.Priority == PTask.TodoPriority.Medium ? "prio-medium" : "") )">
                     <p class="text-md bold">@todo.Title</p>
                     <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
                     <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
-                        <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <p class="text-sm">Fontosság: @Html.DisplayFor(model => @todo.Priority)</p>
                     <a class="text-sm" href="/edit/@todo.Id">Szerkesztés</a>
                 </div>
             }
@@ -45,11 +48,12 @@
     <div class="flex flex-col todo-col">
         @foreach(var todo in Model.CompletedTasks)
             {
-                <div class="todo completed flex flex-col">
+                <div class="todo completed flex flex-col @(@todo.Priority == PTask.TodoPriority.High ? "prio-high" : (@todo.Priority == PTask.TodoPriority.Medium ? "prio-medium" : "") )">
                     <p class="text-md bold">@todo.Title</p>
                     <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
                     <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
                     <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
+                    <p class="text-sm">Fontosság: @Html.DisplayFor(model => @todo.Priority)</p>
                     <a class="text-sm" href="/edit/@todo.Id">Szerkesztés</a>
                 </div>
             }

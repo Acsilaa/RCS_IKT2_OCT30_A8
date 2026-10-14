@@ -80,3 +80,10 @@ body {
 .text-md {
     font-size: 18px;
 }
+
+.prio-high {
+    border: 2px solid red;
+}
+.prio-medium {
+    border: 2px solid orange;
+}
