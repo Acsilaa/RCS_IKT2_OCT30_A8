@@ -20,12 +20,9 @@
                 <input asp-for="PTask.Title" class="form-control" aria-required="true"/>
                 <span asp-validation-for="PTask.Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="PTask.State" class="control-label"></label>
-                <select asp-items="Html.GetEnumSelectList<PTask.TodoState>()" asp-for="PTask.State"></select>
-                <span asp-validation-for="PTask.State" class="text-danger"></span>
-            </div>
+
+            <input type="hidden" value="@PTask.TodoState.Todo" asp-for="PTask.State"/>
+
             <div class="form-group">
                 <label asp-for="PTask.Priority" class="control-label"></label>
                 <select asp-for="PTask.Priority" asp-items="Html.GetEnumSelectList<PTask.TodoPriority>()">
@@ -34,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PTask.Deadline" class="control-label"></label>
-                <input asp-for="PTask.Deadline" class="form-control" type="datetime-local" id="deadlineSelect" />
+                <input asp-for="PTask.Deadline" class="form-control" type="datetime-local" max="@Model.Project.Deadline?.ToString("yyyy-MM-ddTHH:mm")" />
                 <span asp-validation-for="PTask.Deadline" class="text-danger" id="deadlineHelp"></span>
             </div>
             <div class="form-group">
@@ -44,18 +41,8 @@
                 </select>
                 <span asp-validation-for="PTask.MemberId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="PTask.ProjectId" class="control-label"></label>
-                <select asp-for="PTask.ProjectId" class="form-control" id="projectSelect">
-                     <option value="">-- Válasszon projektet --</option>
-                    @foreach (var project in Model.Projects)
-                    {
-                        <option value="@project.Id" data-deadline="@(project.Deadline?.ToString("yyyy-MM-ddTHH:mm") ?? "")">@project.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="PTask.ProjectId" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="PTask.ProjectId" value="@Model.Project.Id" disabled />
+
             <div class="form-group">
                 <input type="submit" value="Létrehozás" class="btn btn-primary" />
             </div>
@@ -64,14 +51,11 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Vissza</a>
+    <a href="/project/@Model.Project.Id/details">Vissza</a>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    @{
-        <script src="~/js/create-task.js"></script>
     }
 }

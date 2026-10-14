@@ -19,26 +19,40 @@ public class CreateModel : PageModel
 
     [BindProperty]
     public CreatePTaskDTO PTask { get; set; } = default!;
-
-    public List<Project> Projects { get; set; } = default!;
     public SelectList Members { get; set; } = default!;
+    public Project Project { get; set; }
 
-    public async Task OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(int prjid)
     {
-        Projects = await _context.Projects.ToListAsync();
+        Project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == prjid);
+        if (Project is null) return NotFound();
         Members = new SelectList(
             await _context.Members.ToListAsync(),
             "Id",
             "Name"
         );
+        return Page();
     }
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD.
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(int prjid)
     {
-        Projects = await _context.Projects.ToListAsync();
+        var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == prjid);
+        if (project is null) return NotFound();
+
         if (!ModelState.IsValid)
         {
+            
+            
+            PTask = new CreatePTaskDTO
+            {
+                ProjectId = project.Id,
+                State = PTask.State,
+                Title = PTask.Title,
+                Deadline = PTask.Deadline,
+                MemberId = PTask.MemberId,
+                Priority = PTask.Priority
+            };
             Members = new SelectList(
             await _context.Members.ToListAsync(),
                 "Id",
@@ -46,14 +60,14 @@ public class CreateModel : PageModel
             );
             return Page();
         }
-        if(PTask.Deadline > Projects.Find(p => p.Id == PTask.ProjectId).Deadline)
+        if(PTask.Deadline > project.Deadline)
         {
-            ModelState.AddModelError("ProjectId", "A határidő nem lehet később, mint a projekt határideje.");
+            ModelState.AddModelError("Deadline", "A határidő nem lehet később, mint a projekt határideje.");
             return Page();
         }
 
         _context.Tasks.Add(new PTask { 
-            ProjectId = PTask.ProjectId,
+            ProjectId = project.Id,
             Title = PTask.Title,
             State = PTask.State,
             Priority = PTask.Priority,
@@ -62,6 +76,6 @@ public class CreateModel : PageModel
         });
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("./Index");
+        return Redirect($"/project/{prjid}/details");
     }
 }
