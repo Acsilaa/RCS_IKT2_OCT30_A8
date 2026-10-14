@@ -11,6 +11,7 @@ namespace iktprojekt
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddControllers(); 
             builder.Services.AddDbContext<ApplicationDbContext>(options => 
                 options.UseSqlite(builder.Configuration.GetConnectionString("dbconnection"))
             );
@@ -34,6 +35,8 @@ namespace iktprojekt
             app.MapStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
+
+            app.MapControllers();
 
             app.Run();
         }

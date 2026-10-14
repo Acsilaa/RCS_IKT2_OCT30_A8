@@ -21,7 +21,11 @@
             @foreach(var todo in Model.TodoTasks)
             {
                 <div class="todo flex flex-col @(@todo.Priority == PTask.TodoPriority.High ? "prio-high" : (@todo.Priority == PTask.TodoPriority.Medium ? "prio-medium" : "") )">
-                    <p class="text-md bold">@todo.Title</p>
+                    <p class="text-md bold flex"><span>@todo.Title</span><button onclick="fetch('/todo/progressstate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ todoId: @todo.Id })
+    }).then(() => location.reload())">-></button></p>
                     <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
                     <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
                     <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
@@ -35,7 +39,11 @@
         @foreach(var todo in Model.InProgressTasks)
             {
                 <div class="todo inprogress flex flex-col @(@todo.Priority == PTask.TodoPriority.High ? "prio-high" : (@todo.Priority == PTask.TodoPriority.Medium ? "prio-medium" : "") )">
-                    <p class="text-md bold">@todo.Title</p>
+                    <p class="text-md bold flex"><span>@todo.Title</span><button  onclick="fetch('/todo/progressstate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ todoId: @todo.Id })
+    }).then(() => location.reload())">-></button></p>
                     <p class="text-sm">@Html.DisplayFor(model => @todo.State)</p>
                     <p class="text-sm">@(todo.Deadline?.ToString("yyyy.MM.dd HH:mm") ?? "(nincs határidő)")</p>
                     <p class="text-sm">@(todo.Member?.Name ?? "(nincs beosztott)")</p>
