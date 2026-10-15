@@ -97,3 +97,18 @@ body {
     justify-content: center;
     align-items: center;
 }
+.member-select{
+    width: 270px;
+    height: 30px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+button#filter-submit {
+    border: 1px solid grey;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    margin-right: 10px;
+}

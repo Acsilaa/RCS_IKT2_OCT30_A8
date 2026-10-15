@@ -6,11 +6,23 @@
     ViewData["Title"] = "Részletek";
 }
 
-<h1 class="text-center mb-10">@Model.Project.Name<br /> <span class="text-md">@Model.Project.Description</span></h1>
+<h1 class="text-center">@Model.Project.Name<br /> <span class="text-md">@Model.Project.Description</span></h1>
+<div style="height: 30px; width: 200px; border: 1px solid gray; margin-inline: auto; margin-top: 10px; position: relative;" class="mb-10">
+    <div style="width: @(Model.completionRate)%; background-color: greenyellow; height: 100%"></div>
+    <p style="position: absolute; left: 50%; top: 3px; transform: translateX(-50%)">@Model.completionRate%</p>
+</div>
 
 <div class="flex justify-between">
-    <h2 class="mb-10">Teendők</h2>
+        <h2 class="mb-10">Teendők</h2>
     <div class="flex gap-2">
+        <div class="flex items-center">
+            <button id="filter-submit"
+            onclick="location.replace('?memberid=' + document.getElementById('member-filter').value)"
+            >Szűrés</button>
+            <select id="member-filter" asp-items="@Model.activeMembers" class="member-select">
+                <option value="">Nincs kiválasztott beosztott</option>
+            </select>
+        </div>
         <a href="/project/@Model.Project.Id/createtodo">+ Teendő</a>
         <a asp-page="./Edit" asp-route-id="@Model.Project.Id">Projekt szerkesztése</a>
     </div>
